@@ -1,0 +1,66 @@
+# Trinity - Lost & Found Platform
+# Jekyll Configuration
+
+# Site settings
+title: Trinity
+description: A prototypeLost & Found Platform to reconnect people with their belongings
+baseurl: ""
+url: "https://trinity.github.io"
+
+# Build settings
+markdown: kramdown
+theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Exclude files and directories from the output
+exclude:
+  - "*.gemfile"
+  - Gemfile.lock
+  - node_modules/
+  - vendor/
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+
+# Include additional files
+include:
+  - _redirects
+  - .htaccess
+
+# Collections
+collections:
+  docs:
+    output: true
+    permalink: /docs/:path/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+
+# Pagination (if using jekyll-paginate)
+paginate: 10
+paginate_path: "/blog/page:num/"
+
+# Social media
+social:
+  twitter: ""
+  github: ""
+  linkedin: ""
+
+# Analytics
+analytics: ""
+
+# Environment
+environment: production

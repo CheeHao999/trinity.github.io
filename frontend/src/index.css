@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Oswald:wght@400;500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: 'Inter', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  @apply text-white bg-background;
+}
+
+@layer utilities {
+  .bg-background {
+    background-color: #0a0a0a;
+  }
+  .bg-surface {
+    background-color: #121212;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.btn-mappa {
+  @apply bg-white text-black px-6 py-3 font-bold uppercase tracking-wider transition-all duration-300 hover:bg-gray-200 border border-white;
+}
+
+.btn-mappa-outline {
+  @apply bg-transparent text-white px-6 py-3 font-bold uppercase tracking-wider transition-all duration-300 hover:bg-white hover:text-black border border-white;
+}
+
+/* Custom scrollbar to match dark minimalist theme */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #444;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #666;
+}
