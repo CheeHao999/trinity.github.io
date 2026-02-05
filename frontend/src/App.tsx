@@ -15,7 +15,7 @@ import ProtectedRoute from './login/ProtectedRoute';
 function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <Routes>
           <Route element={<Layout />}>
             {/* Public Routes */}
