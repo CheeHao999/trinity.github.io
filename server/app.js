@@ -47,7 +47,35 @@ app.get('/', (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
+const seedAdmin = async () => {
+  try {
+    const prisma = require('./shared/utils/prismaClient');
+    const bcrypt = require('bcryptjs');
+    const email = 'admin1@gmail.com';
+    const hashedPassword = await bcrypt.hash('admin123', 10);
+
+    // Upsert admin user to ensure they exist with known credentials
+    await prisma.user.upsert({
+      where: { email },
+      update: {
+        password: hashedPassword,
+        role: 'ADMIN'
+      },
+      create: {
+        email,
+        name: 'Trinity Admin',
+        password: hashedPassword,
+        role: 'ADMIN'
+      }
+    });
+    console.log('Admin user verified/reset successfully');
+  } catch (e) {
+    console.error('Failed to seed admin:', e);
+  }
+};
+
+app.listen(PORT, async () => {
+  await seedAdmin();
   console.log(`Server is running on port ${PORT}`);
 });
 
