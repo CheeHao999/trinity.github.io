@@ -5,14 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trinity - Lost & Found Platform</title>
-    <script>
-        // Auto-redirect to the application
-        const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-        const targetUrl = isLocal ? 'http://localhost:5173' : window.location.origin + '/trinity.github.io/frontend';
-
-        // Only redirect if we haven't come from the app recently (to prevent loops if needed)
-        window.location.href = targetUrl;
-    </script>
     <style>
         * {
             margin: 0;
