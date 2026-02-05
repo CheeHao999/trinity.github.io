@@ -19,7 +19,7 @@ const Home: React.FC = () => {
           className="absolute top-0 left-0 w-full h-full object-cover -z-20 opacity-50 mix-blend-screen pointer-events-none"
         >
           {/* TODO: Replace with user-uploaded video file later */}
-          <source src="/hero_video2.mp4" type="video/mp4" />
+          <source src={`${import.meta.env.BASE_URL}hero_video2.mp4`} type="video/mp4" />
         </video>
 
         {/* Gradient Overlay for Text Readability */}
