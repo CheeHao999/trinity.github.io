@@ -28,6 +28,10 @@ app.use('/api/notifications', notificationRoutes);
 
 const path = require('path');
 app.get('/', (req, res) => {
+  // In development, redirect directly to the frontend dev server
+  if (process.env.NODE_ENV === 'development' || !process.env.NODE_ENV) {
+    return res.redirect('http://localhost:5173');
+  }
   res.sendFile(path.join(__dirname, '../index.html'));
 });
 
