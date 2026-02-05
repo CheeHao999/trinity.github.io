@@ -15,7 +15,8 @@
     "check": "tsc -b --noEmit",
     "predeploy": "npm run build && shx cp dist/index.html dist/404.html",
     "deploy": "gh-pages -d dist",
-    "start": "node server/app.js"
+    "start": "node server/app.js",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^5.11.0",
