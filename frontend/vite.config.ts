@@ -5,8 +5,8 @@ import tsconfigPaths from "vite-tsconfig-paths";
 import { traeBadgePlugin } from 'vite-plugin-trae-solo-badge';
 
 // https://vite.dev/config/
-export default defineConfig({
-  base: '/trinity.github.io/',
+export default defineConfig(({ mode }) => ({
+  base: mode === 'production' ? '/trinity.github.io/' : '/',
   test: {
     globals: true,
     environment: 'jsdom',
@@ -32,7 +32,7 @@ export default defineConfig({
       clickUrl: 'https://www.trae.ai/solo?showJoin=1',
       autoTheme: true,
       autoThemeTarget: '#root'
-    }), 
+    }),
     tsconfigPaths()
   ],
-})
+}))

@@ -9,6 +9,8 @@
   "scripts": {
     "start": "node src/app.js",
     "dev": "nodemon src/app.js",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:all": "concurrently \"npm run dev\" \"npm run dev:frontend\"",
     "test": "jest",
     "postinstall": "prisma generate"
   },
@@ -31,6 +33,7 @@
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
+    "concurrently": "^9.2.1",
     "jest": "^30.2.0",
     "nodemon": "^3.1.11",
     "supertest": "^7.2.2"

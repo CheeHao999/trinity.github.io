@@ -26,16 +26,15 @@ app.use('/api/lost-items', lostItemRouter);
 app.use('/api/found-items', foundItemRouter);
 app.use('/api/notifications', notificationRoutes);
 
+const path = require('path');
 app.get('/', (req, res) => {
-  res.send('Campus Lost and Found API is running');
+  res.sendFile(path.join(__dirname, '../index.html'));
 });
 
 const PORT = process.env.PORT || 3000;
 
-if (require.main === module) {
-  app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-  });
-}
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
 
 module.exports = app;
