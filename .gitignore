@@ -5,5 +5,5 @@ node_modules
 /generated/prisma
 trinity/
 .trae/
-# Root index.html is only for local backend development
-/index.html
+# Root index.html is needed for Render fallback
+# /index.html

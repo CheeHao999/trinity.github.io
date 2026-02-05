@@ -32,7 +32,17 @@ app.get('/', (req, res) => {
   if (process.env.NODE_ENV === 'development' || !process.env.NODE_ENV) {
     return res.redirect('http://localhost:5173');
   }
-  res.sendFile(path.join(__dirname, '../index.html'));
+
+  const indexPath = path.join(__dirname, '../index.html');
+  if (require('fs').existsSync(indexPath)) {
+    res.sendFile(indexPath);
+  } else {
+    res.json({
+      message: "Trinity API is running",
+      status: "online",
+      frontend: "https://cheehao999.github.io/trinity.github.io/"
+    });
+  }
 });
 
 const PORT = process.env.PORT || 3000;
