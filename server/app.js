@@ -13,6 +13,7 @@ const morgan = require('morgan');
 const maintenanceMiddleware = require('./login/maintenanceMiddleware');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpecs = require('./swagger');
+const path = require('path');
 require('dotenv').config();
 
 const authRoutes = require('./login/authRoutes');
@@ -70,8 +71,7 @@ app.get('/api/health', async (req, res) => {
   }
 });
 
-const path = require('path');
-app.get('/:any*', (req, res) => {
+app.use((req, res) => {
   // If it's an API request that wasn't handled, return 404
   if (req.path.startsWith('/api/')) {
     return res.status(404).json({ error: 'API endpoint not found' });
@@ -79,7 +79,9 @@ app.get('/:any*', (req, res) => {
 
   // In development, redirect directly to the frontend dev server
   if (process.env.NODE_ENV === 'development' || !process.env.NODE_ENV) {
-    return res.redirect('http://localhost:5173');
+    if (req.method === 'GET') {
+      return res.redirect('http://localhost:5173');
+    }
   }
 
   const indexPath = path.join(__dirname, '../index.html');
