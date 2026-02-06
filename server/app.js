@@ -1,3 +1,12 @@
+// Add global error handlers for better debugging in production logs
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+});
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught Exception:', err);
+  // Optional: process.exit(1) if you want it to restart, but Render will restart it anyway on crash
+});
+
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
@@ -29,7 +38,8 @@ app.use('/api/notifications', notificationRoutes);
 app.get('/api/health', async (req, res) => {
   const status = {
     env: process.env.NODE_ENV,
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime()
   };
 
   try {
@@ -52,8 +62,6 @@ app.get('/api/health', async (req, res) => {
     status.code = error.code;
     status.meta = error.meta;
 
-    // Only show stack in dev or if explicitly requested (safety)
-    // Render logs will capture the full error from console.error above.
     if (process.env.NODE_ENV !== 'production') {
       status.stack = error.stack;
     }
@@ -89,17 +97,16 @@ app.get('*', (req, res) => {
 const PORT = process.env.PORT || 3000;
 
 const seedAdmin = async () => {
+  console.log('Starting admin seeding/verification...');
   try {
     const prisma = require('./shared/utils/prismaClient');
     const bcrypt = require('bcryptjs');
     const email = 'admin1@gmail.com';
     const hashedPassword = await bcrypt.hash('admin1', 10);
 
-    // Upsert admin user to ensure they exist with known credentials
     await prisma.user.upsert({
       where: { email },
       update: {
-        // password: hashedPassword, // Don't reset password on restart if user exists
         role: 'ADMIN'
       },
       create: {
@@ -115,9 +122,13 @@ const seedAdmin = async () => {
   }
 };
 
-app.listen(PORT, async () => {
-  await seedAdmin();
-  console.log(`Server is running on port ${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server is attempting to start on port ${PORT}...`);
+  seedAdmin().then(() => {
+    console.log(`Server is fully operational on port ${PORT}`);
+  }).catch(err => {
+    console.error('Error during post-startup tasks:', err);
+  });
 });
 
 module.exports = app;
