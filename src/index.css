@@ -80,6 +80,13 @@
   border-radius: 10px;
 }
 
+
 ::-webkit-scrollbar-thumb:hover {
   background: #fff;
+}
+
+/* Fix for date input icon visibility on dark background */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  cursor: pointer;
 }
