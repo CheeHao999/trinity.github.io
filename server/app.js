@@ -71,7 +71,7 @@ app.get('/api/health', async (req, res) => {
 });
 
 const path = require('path');
-app.get('*', (req, res) => {
+app.get('/*', (req, res) => {
   // If it's an API request that wasn't handled, return 404
   if (req.path.startsWith('/api/')) {
     return res.status(404).json({ error: 'API endpoint not found' });
