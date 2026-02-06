@@ -48,12 +48,14 @@ const Register: React.FC = () => {
             </label>
             <input
               id="name"
+              name="name"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="w-full px-4 py-3 border-2 border-gray-800 focus:border-white outline-none transition-colors bg-background text-white font-medium"
               placeholder="John Doe"
               required
+              autoComplete="name"
             />
           </div>
 
@@ -63,12 +65,14 @@ const Register: React.FC = () => {
             </label>
             <input
               id="email"
+              name="email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-3 border-2 border-gray-800 focus:border-white outline-none transition-colors bg-background text-white font-medium"
               placeholder="student@university.edu"
               required
+              autoComplete="email"
             />
           </div>
 
@@ -78,6 +82,7 @@ const Register: React.FC = () => {
             </label>
             <input
               id="password"
+              name="password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -85,6 +90,7 @@ const Register: React.FC = () => {
               placeholder="••••••••"
               required
               minLength={6}
+              autoComplete="new-password"
             />
           </div>
 

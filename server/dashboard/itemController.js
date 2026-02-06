@@ -28,12 +28,12 @@ const formatItem = (item) => {
 
 const findPotentialMatches = async (item) => {
   const targetType = item.type === 'LOST' ? 'FOUND' : 'LOST';
-  
+
   // Basic matching algorithm
   // 1. Match on location (partial)
   // 2. Match on name/description (partial)
   // 3. Status must be OPEN
-  
+
   const matches = await prisma.item.findMany({
     where: {
       type: targetType,
@@ -48,7 +48,7 @@ const findPotentialMatches = async (item) => {
     take: 5,
     orderBy: { createdAt: 'desc' }
   });
-  
+
   return matches;
 };
 
@@ -107,10 +107,12 @@ const createLostItem = async (req, res) => {
         description,
         location,
         date: new Date(lostDate),
+        category: req.body.category || 'Other',
+        color: req.body.color,
         contactInfo,
         imageUrl,
         type: 'LOST',
-        userId,
+        userId: parseInt(userId),
       },
     });
 
@@ -122,10 +124,13 @@ const createLostItem = async (req, res) => {
       potentialMatches: matches.map(formatItem)
     });
   } catch (error) {
-    console.error(error);
-    res
-      .status(500)
-      .json({ error: 'Failed to create lost item', details: error.message });
+    console.error('Create lost item error:', error);
+    res.status(500).json({
+      error: 'Failed to create lost item report',
+      details: error.message,
+      code: error.code,
+      meta: error.meta
+    });
   }
 };
 
@@ -165,26 +170,26 @@ const getFoundItems = async (req, res) => {
     const token = req.header('Authorization')?.replace('Bearer ', '');
     let isAdmin = false;
     if (token) {
-        try {
-            const jwt = require('jsonwebtoken');
-            const decoded = jwt.verify(token, process.env.JWT_SECRET);
-            if (decoded.role === 'ADMIN') isAdmin = true;
-        } catch (e) {
-            // ignore
-        }
+      try {
+        const jwt = require('jsonwebtoken');
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        if (decoded.role === 'ADMIN') isAdmin = true;
+      } catch (e) {
+        // ignore
+      }
     }
 
     const formattedItems = items.map(item => {
-        if (isAdmin) return formatItem(item);
-        
-        return {
-            id: item.id.toString(),
-            category: item.category,
-            color: item.color,
-            date: item.date.toISOString(),
-            status: item.status,
-            type: item.type
-        };
+      if (isAdmin) return formatItem(item);
+
+      return {
+        id: item.id.toString(),
+        category: item.category,
+        color: item.color,
+        date: item.date.toISOString(),
+        status: item.status,
+        type: item.type
+      };
     });
 
     res.json({ items: formattedItems });
@@ -208,7 +213,7 @@ const createFoundItem = async (req, res) => {
     // I'll use the new matching logic to find the best match to link if possible,
     // or just leave it open and return matches.
     // The previous code linked it automatically. I'll preserve that behavior if a strong match is found.
-    
+
     const potentialMatch = await prisma.item.findFirst({
       where: {
         type: 'LOST',
@@ -216,8 +221,8 @@ const createFoundItem = async (req, res) => {
         name: {
           contains: name,
           mode: 'insensitive',
-          },
         },
+      },
       orderBy: { createdAt: 'desc' },
     });
 
@@ -244,10 +249,13 @@ const createFoundItem = async (req, res) => {
       potentialMatches: matches.map(formatItem)
     });
   } catch (error) {
-    console.error(error);
-    res
-      .status(500)
-      .json({ error: 'Failed to create found item', details: error.message });
+    console.error('Create found item error:', error);
+    res.status(500).json({
+      error: 'Failed to create found item report',
+      details: error.message,
+      code: error.code,
+      meta: error.meta
+    });
   }
 };
 
@@ -337,7 +345,7 @@ const claimItem = async (req, res) => {
 
     // Notify all admins
     const admins = await prisma.user.findMany({ where: { role: 'ADMIN' } });
-    
+
     await prisma.notification.createMany({
       data: admins.map(admin => ({
         userId: admin.id,

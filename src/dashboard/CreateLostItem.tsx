@@ -54,7 +54,7 @@ const CreateLostItem: React.FC = () => {
         </div>
 
         <h1 className="text-4xl md:text-5xl font-black uppercase mb-10 tracking-tighter text-white">Report Lost Item</h1>
-        
+
         {error && (
           <div className="bg-red-900/20 text-red-400 p-4 border-l-4 border-red-500 mb-8 font-medium text-sm">
             {error}
@@ -68,6 +68,7 @@ const CreateLostItem: React.FC = () => {
                 Category
               </label>
               <select
+                id="category"
                 name="category"
                 value={formData.category}
                 onChange={handleChange}
@@ -85,6 +86,7 @@ const CreateLostItem: React.FC = () => {
                 Color (Optional)
               </label>
               <input
+                id="color"
                 type="text"
                 name="color"
                 value={formData.color}
@@ -100,6 +102,7 @@ const CreateLostItem: React.FC = () => {
               Item Name
             </label>
             <input
+              id="name"
               type="text"
               name="name"
               value={formData.name}
@@ -115,6 +118,7 @@ const CreateLostItem: React.FC = () => {
               Description
             </label>
             <textarea
+              id="description"
               name="description"
               value={formData.description}
               onChange={handleChange}
@@ -131,6 +135,7 @@ const CreateLostItem: React.FC = () => {
                 Location Lost
               </label>
               <input
+                id="location"
                 type="text"
                 name="location"
                 value={formData.location}
@@ -145,6 +150,7 @@ const CreateLostItem: React.FC = () => {
                 Date Lost
               </label>
               <input
+                id="lostDate"
                 type="date"
                 name="lostDate"
                 value={formData.lostDate}
@@ -160,6 +166,7 @@ const CreateLostItem: React.FC = () => {
               Contact Information
             </label>
             <input
+              id="contactInfo"
               type="text"
               name="contactInfo"
               value={formData.contactInfo}
@@ -175,6 +182,7 @@ const CreateLostItem: React.FC = () => {
               Image URL (Optional)
             </label>
             <input
+              id="imageUrl"
               type="url"
               name="imageUrl"
               value={formData.imageUrl}
