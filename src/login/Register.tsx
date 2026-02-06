@@ -16,7 +16,7 @@ const Register: React.FC = () => {
     setError('');
     setLoading(true);
     try {
-      await register(name, email, password);
+      await register(name.trim(), email.trim(), password);
       // Optional: show success message before redirect
       navigate('/');
     } catch (err: any) {
@@ -32,15 +32,15 @@ const Register: React.FC = () => {
         <div className="absolute top-0 left-0 bg-white text-black px-4 py-1 font-bold uppercase tracking-widest text-xs">
           New User
         </div>
-        
+
         <h2 className="text-4xl font-black text-center mb-10 uppercase tracking-tighter mt-4 text-white">Create Account</h2>
-        
+
         {error && (
           <div className="bg-red-900/20 text-red-400 p-4 border-l-4 border-red-500 mb-8 font-medium text-sm">
             {error}
           </div>
         )}
-        
+
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="group">
             <label htmlFor="name" className="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2 group-focus-within:text-white transition-colors">
@@ -56,7 +56,7 @@ const Register: React.FC = () => {
               required
             />
           </div>
-          
+
           <div className="group">
             <label htmlFor="email" className="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2 group-focus-within:text-white transition-colors">
               Email Address
@@ -71,7 +71,7 @@ const Register: React.FC = () => {
               required
             />
           </div>
-          
+
           <div className="group">
             <label htmlFor="password" className="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2 group-focus-within:text-white transition-colors">
               Password
@@ -87,7 +87,7 @@ const Register: React.FC = () => {
               minLength={6}
             />
           </div>
-          
+
           <button
             type="submit"
             disabled={loading}
@@ -96,7 +96,7 @@ const Register: React.FC = () => {
             {loading ? 'Creating Account...' : 'Register'}
           </button>
         </form>
-        
+
         <div className="mt-8 text-center text-sm font-medium text-gray-500">
           Already have an account? <Link to="/" className="text-white font-bold uppercase tracking-wide hover:underline decoration-2 underline-offset-4 ml-1">Login</Link>
         </div>

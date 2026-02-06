@@ -10,7 +10,9 @@ const register = async (req, res) => {
       return res.status(400).json({ error: 'Email and password are required' });
     }
 
-    const existingUser = await prisma.user.findUnique({ where: { email } });
+    const emailLower = email.toLowerCase().trim();
+
+    const existingUser = await prisma.user.findUnique({ where: { email: emailLower } });
     if (existingUser) {
       return res.status(400).json({ error: 'User already exists' });
     }
@@ -19,7 +21,7 @@ const register = async (req, res) => {
 
     const user = await prisma.user.create({
       data: {
-        email,
+        email: emailLower,
         password: hashedPassword,
         name,
       },
@@ -38,7 +40,13 @@ const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const user = await prisma.user.findUnique({ where: { email } });
+    if (!email || !password) {
+      return res.status(400).json({ error: 'Email and password are required' });
+    }
+
+    const emailLower = email.toLowerCase().trim();
+
+    const user = await prisma.user.findUnique({ where: { email: emailLower } });
     if (!user) {
       return res.status(400).json({ error: 'Invalid credentials' });
     }
@@ -61,9 +69,11 @@ const requestPasswordReset = async (req, res) => {
   try {
     const { email } = req.body;
     if (!email) return res.status(400).json({ error: 'Email is required' });
-    
+
+    const emailLower = email.toLowerCase().trim();
+
     // Placeholder for password reset logic
-    const user = await prisma.user.findUnique({ where: { email } });
+    const user = await prisma.user.findUnique({ where: { email: emailLower } });
     if (user) {
       await prisma.user.update({
         where: { id: user.id },
@@ -71,7 +81,7 @@ const requestPasswordReset = async (req, res) => {
       });
       console.log(`Password reset requested for ${email}`);
     }
-    
+
     res.json({ message: 'If your email is registered, you will receive a password reset link.' });
   } catch (error) {
     console.error(error);
