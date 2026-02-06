@@ -64,7 +64,7 @@ const CreateLostItem: React.FC = () => {
         <form onSubmit={handleSubmit} className="space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="group">
-              <label className="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2 group-focus-within:text-white transition-colors">
+              <label htmlFor="category" className="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2 group-focus-within:text-white transition-colors">
                 Category
               </label>
               <select
@@ -82,7 +82,7 @@ const CreateLostItem: React.FC = () => {
               </select>
             </div>
             <div className="group">
-              <label className="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2 group-focus-within:text-white transition-colors">
+              <label htmlFor="color" className="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2 group-focus-within:text-white transition-colors">
                 Color (Optional)
               </label>
               <input
@@ -98,7 +98,7 @@ const CreateLostItem: React.FC = () => {
           </div>
 
           <div className="group">
-            <label className="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2 group-focus-within:text-white transition-colors">
+            <label htmlFor="name" className="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2 group-focus-within:text-white transition-colors">
               Item Name
             </label>
             <input
@@ -114,7 +114,7 @@ const CreateLostItem: React.FC = () => {
           </div>
 
           <div className="group">
-            <label className="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2 group-focus-within:text-white transition-colors">
+            <label htmlFor="description" className="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2 group-focus-within:text-white transition-colors">
               Description
             </label>
             <textarea
@@ -131,7 +131,7 @@ const CreateLostItem: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="group">
-              <label className="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2 group-focus-within:text-white transition-colors">
+              <label htmlFor="location" className="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2 group-focus-within:text-white transition-colors">
                 Location Lost
               </label>
               <input
@@ -146,7 +146,7 @@ const CreateLostItem: React.FC = () => {
               />
             </div>
             <div className="group">
-              <label className="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2 group-focus-within:text-white transition-colors">
+              <label htmlFor="lostDate" className="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2 group-focus-within:text-white transition-colors">
                 Date Lost
               </label>
               <input
@@ -162,7 +162,7 @@ const CreateLostItem: React.FC = () => {
           </div>
 
           <div className="group">
-            <label className="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2 group-focus-within:text-white transition-colors">
+            <label htmlFor="contactInfo" className="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2 group-focus-within:text-white transition-colors">
               Contact Information
             </label>
             <input
@@ -178,7 +178,7 @@ const CreateLostItem: React.FC = () => {
           </div>
 
           <div className="group">
-            <label className="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2 group-focus-within:text-white transition-colors">
+            <label htmlFor="imageUrl" className="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2 group-focus-within:text-white transition-colors">
               Image URL (Optional)
             </label>
             <input
